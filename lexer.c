@@ -14,9 +14,21 @@ int main(int argc,char *argv[])
 		printf("Could not open file\n");
 		return 1;
 	}
+	int lc=1;
+	int nl=1;
 	while(fscanf(ptr,"%c",&c)!=EOF)
 	{
+		if(nl)
+		{
+			printf("%d\t",lc);
+			nl=0;
+		}
 		printf("%c",c);
+		if(c=='\n')
+		{
+			lc++;
+			nl=1;
+		}
 	}
 	return 0;
 }
