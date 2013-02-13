@@ -1,5 +1,14 @@
 #include<stdio.h>
 #include<string.h>
+#define IDENTIFIER 0
+#define WS 1
+#define PARANTHESIS 2
+#define KEYWORD 3
+typedef struct Symbol
+{
+	int type;
+	char *name;
+};
 int main(int argc,char *argv[])
 {
 	if(argc!=2)
