@@ -164,7 +164,27 @@ int main(int argc,char *argv[])
 			}
 			i=0;
 		}
-		else if((c>='A'&&c<='Z')||(c>='a'&&c<='z'))
+		else if(c==')'||c=='(')
+		{
+			checkbuffer(buffer,i,lc);
+
+			struct Symbol *new=(struct Symbol *)malloc(sizeof(struct Symbol));
+			strcpy(new->name,(c==')')?")":"(");
+			new->line=lc;
+			new->type=BS;
+			new->next=NULL;
+			if(list==NULL)
+				list=new;
+			else
+			{
+				struct Symbol *temp=list;
+				while(temp->next!=NULL)
+					temp=temp->next;
+				temp->next=new;
+			}
+			i=0;
+		}
+		else if((c>='A'&&c<='Z')||(c>='a'&&c<='z')||c=='_')
 		{	
 			buffer[i]=c;
 			i++;
@@ -177,6 +197,7 @@ int main(int argc,char *argv[])
 			{
 				if(c=='"')
 					break;
+				printf("%c",c);
 				buffer[i]=c;
 				i++;
 			}
