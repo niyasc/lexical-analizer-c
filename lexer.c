@@ -5,6 +5,7 @@
 #define WS 1
 #define BS 2
 #define KW 3
+#define SC 4
 struct Symbol
 {
 	int type;
@@ -57,6 +58,7 @@ void display()
 				break;
 			case BS : printf("Braces\t");
 				break;
+			case SC : printf("String constant");
 		}
 		printf("\t%s\n",temp->name);
 		temp=temp->next;
@@ -72,6 +74,7 @@ void display()
 			break;
 		case BS : printf("Braces\t");
 			break;
+		case SC : printf("String constant");
 	}
 	printf("\t%s\n",temp->name);
 }
@@ -166,6 +169,37 @@ int main(int argc,char *argv[])
 			buffer[i]=c;
 			i++;
 		}
+		else if(c=='"')
+		{
+			checkbuffer(buffer,i,lc);
+			i=0;
+			while(fscanf(ptr,"%c",&c)!=EOF)
+			{
+				if(c=='"')
+					break;
+				buffer[i]=c;
+				i++;
+			}
+			struct Symbol *new=(struct Symbol *)malloc(sizeof(struct Symbol));
+			buffer[i]=0;
+			strcpy(new->name,buffer);
+			new->line=lc;
+			new->type=SC;
+			new->next=NULL;
+			if(list==NULL)
+				list=new;
+			else
+			{
+				struct Symbol *temp=list;
+				while(temp->next!=NULL)
+					temp=temp->next;
+				temp->next=new;
+			}
+			i=0;
+		}
+			
+		
+				
 		else
 		{
 			checkbuffer(buffer,i,lc);
